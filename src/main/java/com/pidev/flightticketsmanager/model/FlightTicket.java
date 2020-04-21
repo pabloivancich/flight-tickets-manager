@@ -1,10 +1,11 @@
 package com.pidev.flightticketsmanager.model;
 
-import jdk.jfr.DataAmount;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
-//@Entity
+@Entity
 public class FlightTicket {
 
     /*
@@ -19,9 +20,10 @@ public class FlightTicket {
             ix. Departure Time
             x. Arrival Time
      */
-    //@Id
-    //@GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String passengerName;
     private Integer passengerAge;
     private Integer price;

@@ -4,43 +4,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 public class FlightTicket {
 
-    /*
-            i. Departure Date
-            ii. Arrival Date
-            iii. City Of Origin
-            iv. Destination City
-            v. Passenger Name
-            vi. Passenger Age
-            vii. It has a luggage storage
-            viii. Price
-            ix. Departure Time
-            x. Arrival Time
-     */
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     private String passengerName;
-    private Integer passengerAge;
-    private Integer price;
+    private int passengerAge;
+    private int price;
     private String originCity;
     private String destinationCity;
     private Boolean luggage;
-    private Date departure;
-    private Date arrival;
+    private LocalDate departureDate;
+    private LocalTime departureTime;
+    private LocalDate arrivalDate;
+    private LocalTime arrivalTime;
 
     public FlightTicket() { }
 
-    public Long getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -52,19 +43,19 @@ public class FlightTicket {
         this.passengerName = passengerName;
     }
 
-    public Integer getPassengerAge() {
+    public int getPassengerAge() {
         return this.passengerAge;
     }
 
-    public void setPassengerAge(Integer passengerAge) {
+    public void setPassengerAge(int passengerAge) {
         this.passengerAge = passengerAge;
     }
 
-    public Integer getPrice() {
+    public int getPrice() {
         return this.price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -92,20 +83,36 @@ public class FlightTicket {
         this.luggage = luggage;
     }
 
-    public Date getDeparture() {
-        return this.departure;
+    public LocalDate getDepartureDate() {
+        return this.departureDate;
     }
 
-    public void setDeparture(Date departure) {
-        this.departure = departure;
+    public void setDepartureDate(LocalDate departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public Date getArrival() {
-        return this.arrival;
+    public LocalTime getDepartureTime() {
+        return departureTime;
     }
 
-    public void setArrival(Date arrival) {
-        this.arrival = arrival;
+    public void setDepartureTime(LocalTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public LocalDate getArrivalDate() {
+        return this.arrivalDate;
+    }
+
+    public void setArrivalDate(LocalDate arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public LocalTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
 }

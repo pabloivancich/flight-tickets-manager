@@ -3,6 +3,8 @@ package com.pidev.flightticketsmanager.controller;
 import com.pidev.flightticketsmanager.model.FlightTicket;
 import com.pidev.flightticketsmanager.service.FlightTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,12 +19,14 @@ public class FlightTicketController {
         this.flightTicketService = flightTicketService;
     }
 
-    @GetMapping(value = "/{id}", produces = "application/json")
-    public FlightTicket getFlightTicket(@PathVariable Long id) {
-        return flightTicketService.findFlightTicketById(id).get();
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FlightTicket> getFlightTicket(@PathVariable Long id) {
+        return flightTicketService.findFlightTicketById(id).isPresent()
+                ? ResponseEntity.ok(flightTicketService.findFlightTicketById(id).get())
+                : ResponseEntity.notFound().build();
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public FlightTicket saveFlightTicket(@RequestBody FlightTicket ticket) {
         return flightTicketService.saveFlightTicket(ticket);
     }

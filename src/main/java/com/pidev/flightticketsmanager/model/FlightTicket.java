@@ -2,6 +2,7 @@ package com.pidev.flightticketsmanager.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
@@ -21,19 +22,19 @@ public class FlightTicket {
             x. Arrival Time
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     private String passengerName;
     private Integer passengerAge;
     private Integer price;
+    private String originCity;
+    private String destinationCity;
     private Boolean luggage;
     private Date departure;
     private Date arrival;
 
-    public FlightTicket() {
-
-    }
+    public FlightTicket() { }
 
     public Long getId() {
         return this.id;
@@ -65,6 +66,22 @@ public class FlightTicket {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getOriginCity() {
+        return this.originCity;
+    }
+
+    public void setOriginCity(String originCity) {
+        this.originCity = originCity;
+    }
+
+    public String getDestinationCity() {
+        return this.destinationCity;
+    }
+
+    public void setDestinationCity(String destinationCity) {
+        this.destinationCity = destinationCity;
     }
 
     public Boolean getLuggage() {

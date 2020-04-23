@@ -26,5 +26,12 @@ This application uses an in memory H2 database.
 You can access the console in browser with URL http://localhost:8080/h2.
 Here you can verify the table structure and data.
 
+### Testing
+To execute the applciation test using maven, you have to run
+```
+> mvnw clean test
+```
+Also, in the folder postman in the project root, there is a Postman collection to test te API. 
+
 
 

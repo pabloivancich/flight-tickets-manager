@@ -1,6 +1,8 @@
 package com.pidev.flightticketsmanager.controller;
 
+import static org.mockito.BDDMockito.given;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pidev.flightticketsmanager.model.FlightTicket;
 import com.pidev.flightticketsmanager.service.FlightTicketService;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,10 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(FlightTicketController.class)
@@ -66,9 +66,9 @@ public class FlightTicketControllerTest {
 
         given(flightTicketService.findAllFlightTickets()).willReturn(tickets);
 
-        mockMvc.perform(get("/flighttickets/")
+        mockMvc.perform(MockMvcRequestBuilders.get("/flighttickets/")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
@@ -88,25 +88,45 @@ public class FlightTicketControllerTest {
 
         given(flightTicketService.findFlightTicketById(1L)).willReturn(Optional.of(ticket));
 
-        mockMvc.perform(get("/flighttickets/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/flighttickets/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1));;
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));;
     }
 
     @Test
     public void testFindFlightTicketNotFound() throws Exception {
         given(flightTicketService.findFlightTicketById(1L)).willReturn(Optional.empty());
 
-        mockMvc.perform(get("/flighttickets/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/flighttickets/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
     public void testSaveFlightTicket() throws Exception {
-        // TODO implement this test!!
+        FlightTicket ticket = new FlightTicket();
+        ticket.setPassengerName("Pablo I");
+        ticket.setPassengerAge(32);
+        ticket.setPrice(100);
+        ticket.setLuggage(true);
+        ticket.setOriginCity("BUE");
+        ticket.setDestinationCity("BAR");
+
+        mockMvc.perform( MockMvcRequestBuilders.post("/flighttickets/")
+                .content(asJsonString(ticket))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -5,6 +5,7 @@ import com.pidev.flightticketsmanager.repository.FlightTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,11 @@ public class FlightTicketService {
     @Autowired
     public FlightTicketService(FlightTicketRepository flightTicketRepository) {
         this.flightTicketRepository = flightTicketRepository;
+    }
+
+
+    public List<FlightTicket> findAllFlightTickets() {
+        return flightTicketRepository.findAll();
     }
 
     public Optional<FlightTicket> findFlightTicketById(Long id) {

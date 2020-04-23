@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController()
 @RequestMapping("/flighttickets")
@@ -19,8 +21,14 @@ public class FlightTicketController {
         this.flightTicketService = flightTicketService;
     }
 
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FlightTicket> findAllFlightTickets() {
+        return flightTicketService.findAllFlightTickets();
+    }
+
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FlightTicket> getFlightTicket(@PathVariable Long id) {
+    public ResponseEntity<FlightTicket> findFlightTicket(@PathVariable Long id) {
         return flightTicketService.findFlightTicketById(id).isPresent()
                 ? ResponseEntity.ok(flightTicketService.findFlightTicketById(id).get())
                 : ResponseEntity.notFound().build();
